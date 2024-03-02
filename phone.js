@@ -2,6 +2,7 @@ const readline = require('readline');
 const fs = require('fs');
 const path = require('path');
 
+// I FINALLY GOT THE JSON FILES WORKING RIGHT... THAT WAS ANNOYING FOR A BIT
 const contactsPath = path.resolve(__dirname, 'contacts.json');
 const callHistoryPath = path.resolve(__dirname, 'call_history.json');
 
@@ -66,7 +67,7 @@ class Phone {
       observer.update(phoneNumber, action);
     }
   }
-
+  // METHOD TO DISPLAY CALL HISTORY FOR ALL CONTACTS. i TOOK IT OFF THE MAIN MENU. MAYBE I SHOULD PUT IT BACK IN
   displayCallHistory() {
     console.log("Call History:");
     for (const call of this.callHistory) {
@@ -77,11 +78,11 @@ class Phone {
       console.log(`Contact Name: ${contactName}, Phone Number: ${phoneNumber}, Timestamp: ${timestamp}`);
     }
   }
-
+  // METHOD TO SAVE CONTACTS TO CONTACTS.JSON
   saveContactsToJSON() {
     fs.writeFileSync(contactsPath, JSON.stringify(this.contacts, null, 2));
   }
-
+  // METHOD TO LOAD CONTACTS FROM CONTACTS.JSON AND PARSE THE DATA SO ITS USEABLE 
   loadContactsFromJSON() {
     if (fs.existsSync(contactsPath)) {
       this.contacts = JSON.parse(fs.readFileSync(contactsPath, 'utf8'));
@@ -89,11 +90,12 @@ class Phone {
       fs.writeFileSync(contactsPath, '[]');
     }
   }
-
+  // METHOD TO SAVE DATA TO CALL_HISTORY.JSON
   saveCallHistoryToJSON() {
     fs.writeFileSync(callHistoryPath, JSON.stringify(this.callHistory, null, 2));
   }
 
+  //LOADS CALL HISTORY FROM CALL_HISTORY.JSON
   loadCallHistoryFromJSON() {
     if (fs.existsSync(callHistoryPath)) {
       this.callHistory = JSON.parse(fs.readFileSync(callHistoryPath, 'utf8'));
@@ -102,11 +104,12 @@ class Phone {
     }
   }
 
+  // ADDS CALL LOG DATA TO CALL_HISTORY.JSON
   addCallToHistory(phoneNumber) {
     this.callHistory.push({ phoneNumber, timestamp: new Date().toISOString() });
     this.saveCallHistoryToJSON();
   }
-
+  // DISPLAY CONTACTS METHOD 
   displayContacts() {
     console.log("Contacts:");
     for (let i = 0; i < this.contacts.length; i++) {
@@ -114,7 +117,7 @@ class Phone {
     }
   }
 
-  // NEW EDIT CONTACT FUNCTION
+  // EDIT CONTACT METHOD
   editContact(name, newPhoneNumber) {
     const contact = this.contacts.find(c => c.name === name);
     if (contact) {
@@ -126,6 +129,7 @@ class Phone {
   }
 }
 
+// CREATING FIRST OBSERVER CLASS 
 class Observer {
   constructor(phone) {
     this.phone = phone;
@@ -149,6 +153,7 @@ class Observer2 {
   }
 }
 
+
 function addContact(phone) {
   rl.question("Enter contact name: ", (name) => {
     rl.question("Enter contact phone number(080 or +234 format): ", (phoneNumber) => {
@@ -156,13 +161,6 @@ function addContact(phone) {
       console.log(`New contact ${name} saved.`);
       mainMenu(phone);
     });
-  });
-}
-
-function removePhoneNumber(phone) {
-  rl.question("Enter phone number to remove: ", (input) => {
-    phone.removePhoneNumber(input);
-    mainMenu(phone);
   });
 }
 
@@ -183,7 +181,7 @@ function displayCallHistory(phone) {
   mainMenu(phone);
 }
 
-// TO VIEW CONTACTS AND APPLY METHODS TO THE CHOSEN CONTACT
+// TO VIEW CONTACTS AND APPLY METHODS TO THE SELECTED  CONTACT
 function viewContacts(phone) {
   phone.displayContacts();
   rl.question("Enter the index of the contact you want to interact with: ", (index) => {
@@ -193,12 +191,13 @@ function viewContacts(phone) {
       mainMenu(phone);
       return;
     }
-
+    // SELECT A CONTACT 
     const contact = phone.contacts[index];
     rl.question(`Do you want to (1) dial ${contact.name}, (2) edit ${contact.name}, (3) remove ${contact.name}, or (4) view call history? `, (answer) => {
       switch (answer) {
         case '1':
           phone.dialPhoneNumber(contact.phoneNumber);
+          console.log(`Calling ${contact.name}`)
           mainMenu(phone);
           break;
         case '2':
@@ -214,6 +213,7 @@ function viewContacts(phone) {
           mainMenu(phone);
           break;
         case '4':
+          console.log(`Loading contact history`);
           phone.displayCallHistory();
           mainMenu(phone);
           break;
@@ -226,9 +226,9 @@ function viewContacts(phone) {
   });
 }
 
-
+// iNTRODUCING MY MVP MAIN MENU
 function mainMenu(phone) {
-  rl.question("What do you want to do? \n(1) Add new contact, \n(2) Dial phone number, \n(3) View contacts list: ", (answer) => {
+  rl.question("What do you want to do? \n(1) Add new contact, \n(2) Dial phone number, \n(3) View contacts list, \n(4) View call logs: ", (answer) => {
     switch (answer) {
       case '1':
         addContact(phone);
@@ -238,6 +238,9 @@ function mainMenu(phone) {
         break;
       case '3':
         viewContacts(phone);
+        break;
+      case '4':
+        displayCallHistory(phone);
         break;
       default:
         console.log("Invalid choice");
@@ -249,8 +252,10 @@ function mainMenu(phone) {
 
 const phone = new Phone();
 const observer = new Observer(phone);
+
 const observer2 = new Observer2(phone);
 mainMenu(phone);
+
 /* To test the saved phone number requirements:
 savedNumber = RedX : O9065795264;
 unsavedNumber = 08080808080;
