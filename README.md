@@ -4,6 +4,9 @@ Learnable task 8
 Lets start with the basics, this is a console application json file linked as a database for my contact list and a call history. 
 RUN node phone.js to start
 
+##### Test Numbers:
+- Contact: RedX - 09065795264
+- Unsaved number - 07011000011
 
 ## Phone Class
 My main class constructor with multiple methods included. I build my code by asking what I'd expect to see on the real thing so I included the following:
