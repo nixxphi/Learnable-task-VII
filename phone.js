@@ -50,18 +50,19 @@ class Phone {
     this.addCallToHistory(phoneNumber);
     this.notifyObservers(phoneNumber, "Now Dialing");
   }
-
+  // TO ADD AN OBSERVER
   addObserver(observer) {
     this.observers.push(observer);
   }
 
+  // TO REMOVE AN OBSERVER 
   removeObserver(observer) {
     const index = this.observers.indexOf(observer);
     if (index !== -1) {
       this.observers.splice(index, 1);
     }
   }
-
+  // THE OBSERVER NOTIFIER 
   notifyObservers(phoneNumber, action) {
     for (const observer of this.observers) {
       observer.update(phoneNumber, action);
@@ -76,6 +77,16 @@ class Phone {
       const contact = this.contacts.find(c => c.phoneNumber === phoneNumber);
       const contactName = contact ? contact.name : "Unknown";
       console.log(`Contact Name: ${contactName}, Phone Number: ${phoneNumber}, Timestamp: ${timestamp}`);
+    }
+    mainMenu();
+  }
+
+  displayCalllog(contact) {
+    console.log(`Call History for ${contact.name}:`);
+    for (const call of this.callHistory) {
+      if (call.phoneNumber === contact.phoneNumber) {
+        console.log(`Phone Number: ${call.phoneNumber}, Timestamp: ${call.timestamp}`);
+      }
     }
   }
   // METHOD TO SAVE CONTACTS TO CONTACTS.JSON
@@ -180,11 +191,6 @@ function dialPhoneNumber(phone) {
   });
 }
 
-function displayCallHistory(phone) {
-  phone.displayCallHistory();
-  mainMenu(phone);
-}
-
 // TO VIEW CONTACTS AND APPLY METHODS TO THE SELECTED  CONTACT
 function viewContacts(phone) {
   phone.displayContacts();
@@ -218,13 +224,13 @@ function viewContacts(phone) {
           break;
         case '4':
           console.log(`Loading contact history`);
-          phone.displayCallHistory();
+          phone.displayCalllog(contact);
           mainMenu(phone);
           break;
         case '5':
           console.log("Going back...")
           mainMenu(phone);
-          break;3
+          break;
         default:
           console.log("Invalid choice");
           mainMenu(phone);
@@ -246,9 +252,11 @@ function mainMenu(phone) {
         break;
       case '3':
         viewContacts(phone);
+        mainMenu(phone);
         break;
       case '4':
-        displayCallHistory(phone);
+        phone.displayCallHistory();
+        mainMenu(phone);
         break;
       default:
         console.log("Invalid choice");
