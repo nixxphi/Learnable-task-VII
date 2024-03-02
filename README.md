@@ -30,17 +30,23 @@ All these methods have notifiers for each action
 ### Observers
  Includes an observer object with two observer classes, observer1 and observer2 with methods for adding, removing and notifying observers with notifications for different actions, not just dialing. 
  Why I did this? it just didn't make sense to leave the others out. Chalk it up to equality.
-- .
+- ###### Yeah...I got rid of most of that. Too much clutter.
 
 ### The interface:
 
 The interface offers a menu with responses to be provided as numbers.  
 Attempting to dial a phone number absent from the contacts list returns an error message. Maybe making it console.error would be best. Console.log works just fine though... and I really dont wanna go back in. i might remake the whole thing, again.
-The main menu has options for
-- Add new contact
-- Dial phone number 
-- View contacts list
+The main menu has options for:
+- Addind a new contact.
+- Dialing a phone number(must be saved to work).
+- Viewing contacts list.
+- Viewing full call history.
 
 #### Contacts list 
 
 Going with this option lists all saved contacts on the console. You select contacts by typing in their index numbers
+Selecting a number brings up another set if options for contact methods. You can:
+- Dial the selected contact.
+- Edit the selected contact.
+- Remove the selected contact.
+- Return to the main menu.
