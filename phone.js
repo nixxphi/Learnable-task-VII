@@ -17,7 +17,7 @@ class Phone {
     this.observers = [];
     this.loadContactsFromJSON();
     this.loadCallHistoryFromJSON();
-    this.regexPattern = /^(0[0-9]{10}|\+[0-9]{3}[0-9]{10})$/;
+    this.regexPattern = /^(0[0-9]{10}|\+[0-9]{13})$/;
   }
 
   addPhoneNumber(phoneNumber, name) {
