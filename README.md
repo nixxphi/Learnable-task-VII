@@ -14,8 +14,8 @@ My main class constructor with multiple methods included. I build my code by ask
 - Contacts loaded from contacts.json with its own methods for saved contacts (Add, Edit, Delete and dial.)
 - A call history
 - A dialing function for unsaved phone numbers.
-- A regex to maKe sure these are real phone number.
--  it also includes codes for creating and accessing the contacts list in the file, contacts.json and the call_history.json file which stores the phone number and a timestamp for the dialed number.
+- A regex to maKe sure these are real phone numbers.
+-  It also includes codes for creating and accessing the contacts list in the file, contacts.json and the call_history.json file which stores the phone number and a timestamp for the dialed number.
 
 -
 
