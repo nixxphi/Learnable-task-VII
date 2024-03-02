@@ -129,31 +129,34 @@ class Phone {
   }
 }
 
-// CREATING FIRST OBSERVER CLASS 
+// CREATING FIRST OBSERVER CLASS... OBSERVER, REMINDS ME OF THE WATCHERS 
 class Observer {
   constructor(phone) {
     this.phone = phone;
     this.phone.addObserver(this);
   }
 
+  // UPDATING WATCHER... ERR, OBSERVER
   update(phoneNumber, action) {
     console.log(`Observer1: ${phoneNumber}`);
   }
 }
 
+// BIRTHING SECOND OBSERVER
 class Observer2 {
   constructor(phone) {
     this.phone = phone;
     this.phone.addObserver(this);
   }
 
+  // UPDATING SECOND OBSERVER 
   update(phoneNumber, action) {
     const last10Digits = phoneNumber.slice(-10);
     console.log(`Observer2: Now Dialing ${last10Digits}`);
   }
 }
 
-
+// FUNCTION TO ADD A NEW CONTACT THROUGH INTERFACE INPUT 
 function addContact(phone) {
   rl.question("Enter contact name: ", (name) => {
     rl.question("Enter contact phone number(080 or +234 format): ", (phoneNumber) => {
@@ -164,6 +167,7 @@ function addContact(phone) {
   });
 }
 
+// FUNCTION TO DIAL THROUGH INTERFACE INPUT. WON'T WORK IF CONTACT IS UNSAVED. 
 function dialPhoneNumber(phone) {
   rl.question("Enter phone number: ", (input) => {
     const contact = phone.contacts.find(c => c.phoneNumber === input);
@@ -193,7 +197,7 @@ function viewContacts(phone) {
     }
     // SELECT A CONTACT 
     const contact = phone.contacts[index];
-    rl.question(`Do you want to (1) dial ${contact.name}, (2) edit ${contact.name}, (3) remove ${contact.name}, or (4) view call history? `, (answer) => {
+    rl.question(`Do you want to (1) dial ${contact.name}, (2) edit ${contact.name}, (3) remove ${contact.name}, (4) view call history \n(5) or go back to the main menu `, (answer) => {
       switch (answer) {
         case '1':
           phone.dialPhoneNumber(contact.phoneNumber);
@@ -217,6 +221,10 @@ function viewContacts(phone) {
           phone.displayCallHistory();
           mainMenu(phone);
           break;
+        case '5':
+          console.log("Going back...")
+          mainMenu(phone);
+          break;3
         default:
           console.log("Invalid choice");
           mainMenu(phone);
