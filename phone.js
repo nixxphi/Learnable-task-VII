@@ -212,7 +212,7 @@ function viewContacts(phone) {
           break;
         case '2':
           rl.question("Enter new phone number: ", (newPhoneNumber) => {
-            phone.editContact(contact.name, newPhoneNumber); // CALL THE EDIT FUNCTION HERE
+            phone.editContact(contact.name, newPhoneNumber);
             console.log(`Contact ${contact.name} edited successfully.`);
             mainMenu(phone);
           });
@@ -223,7 +223,7 @@ function viewContacts(phone) {
           mainMenu(phone);
           break;
         case '4':
-          console.log(`Loading contact history`);
+          console.log(`Loading contact history...`);
           phone.displayCalllog(contact);
           mainMenu(phone);
           break;
@@ -240,7 +240,7 @@ function viewContacts(phone) {
   });
 }
 
-// iNTRODUCING MY MVP MAIN MENU
+// INTRODUCING MY MVP MAIN MENU
 function mainMenu(phone) {
   rl.question("What do you want to do? \n(1) Add new contact, \n(2) Dial phone number, \n(3) View contacts list, \n(4) View call logs: ", (answer) => {
     switch (answer) {
